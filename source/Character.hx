@@ -28,6 +28,16 @@ class Character extends FlxSprite
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
 
+		var bfVerPrefix:String = "";
+		var bfVPTemp:Float = 0;
+		if (FlxG.save.data.bfSkinVersion == 0 || FlxG.save.data.bfSkinVersion == 1) {}
+		else
+		{
+			bfVPTemp = FlxG.save.data.bfSkinVersion-1;
+			bfVerPrefix = ''+bfVPTemp;
+		}
+		trace(bfVerPrefix);
+
 		switch (curCharacter)
 		{
 			case 'gf':
@@ -121,6 +131,20 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
 				antialiasing = false;
+
+			case 'gfTankmen':
+				// GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('characters/gfTankmen');
+				frames = tex;
+				animation.addByPrefix('sad', 'GF Crying at Gunpoint ', 24, false);
+				animation.addByIndices('danceLeft', 'GF Dancing at Gunpoint', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'GF Dancing at Gunpoint', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+
+				addOffset('sad', -2, -2);
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+
+				playAnim('danceRight');
 
 			case 'dad':
 				// DAD ANIMATION LOADING CODE
@@ -267,7 +291,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf':
-				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND'+bfVerPrefix);
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -305,8 +329,54 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+			case 'bfAndGf':
+				var tex = Paths.getSparrowAtlas('characters/bfAndGF');
+				frames = tex;
+				animation.addByPrefix('idle', 'BF idle dance w gf', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+				animation.addByPrefix('cathingGf', 'BF catches GF', 24, false);
+
+				addOffset('idle', 0, 0);
+				addOffset("singUP", -29, 10);
+				addOffset("singRIGHT", -41, 23);
+				addOffset("singLEFT", 12, 7);
+				addOffset("singDOWN", -10, -10);
+				addOffset("singUPmiss", -29, 10);
+				addOffset("singRIGHTmiss", -41, 23);
+				addOffset("singLEFTmiss", 12, 7);
+				addOffset("singDOWNmiss", -10, -10);
+				addOffset("cathingGf", 0, 0);
+
+				playAnim('idle');
+
+				flipX = true;
+
+			case 'bfAndGf-dead':
+				
+				frames = Paths.getSparrowAtlas('characters/bfHoldingGF-DEAD');
+				animation.addByPrefix('singUP', "BF Dies with GF", 24, false);
+				animation.addByPrefix('firstDeath', "BF Dies with GF", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead with GF Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "RETRY confirm holding gf", 24, false);
+				animation.play('firstDeath');
+				
+				addOffset('firstDeath', 37, 14);
+				addOffset('deathLoop', 37, -3);
+				addOffset('deathConfirm', 37, 28);
+
+				playAnim('firstDeath');
+				
+				flipX = true;
+
 			case 'bf-christmas':
-				var tex = Paths.getSparrowAtlas('characters/bfChristmas');
+				var tex = Paths.getSparrowAtlas('characters/bfChristmas'+bfVerPrefix);
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -334,7 +404,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-car':
-				var tex = Paths.getSparrowAtlas('characters/bfCar');
+				var tex = Paths.getSparrowAtlas('characters/bfCar'+bfVerPrefix);
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -359,7 +429,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel':
-				frames = Paths.getSparrowAtlas('characters/bfPixel');
+				frames = Paths.getSparrowAtlas('characters/bfPixel'+bfVerPrefix);
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
 				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
 				animation.addByPrefix('singLEFT', 'BF LEFT NOTE', 24, false);
@@ -392,7 +462,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel-dead':
-				frames = Paths.getSparrowAtlas('characters/bfPixelsDEAD');
+				frames = Paths.getSparrowAtlas('characters/bfPixelsDEAD'+bfVerPrefix);
 				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
 				animation.addByPrefix('firstDeath', "BF Dies pixel", 24, false);
 				animation.addByPrefix('deathLoop', "Retry Loop", 24, true);
@@ -429,6 +499,21 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				antialiasing = false;
+			case 'agoti':
+				frames = Paths.getSparrowAtlas('characters/AGOTI');
+				animation.addByPrefix('idle', 'Agoti_Idle', 24, false);
+				animation.addByPrefix('singUP', 'Agoti_Up', 24, false);
+				animation.addByPrefix('singLEFT', 'Agoti_Left', 24, false);
+				animation.addByPrefix('singRIGHT', 'Agoti_Right', 24, false);
+				animation.addByPrefix('singDOWN', 'Agoti_Down', 24, false);
+
+				addOffset('idle', 0, 155);
+				addOffset("singUP", 104, 235);
+				addOffset("singRIGHT", 93, 112);
+				addOffset("singLEFT", 89, 190);
+				addOffset("singDOWN", 20, -39);
+
+				playAnim('idle');
 			case 'senpai-angry':
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
@@ -495,6 +580,61 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
+
+			case 'tankman':
+				// TANKMAN ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('characters/tankman');
+				frames = tex;
+				animation.addByPrefix('idle', 'Tankman Idle Dance', 24);
+				animation.addByPrefix('singUP', 'Tankman UP note', 24);
+				animation.addByPrefix('singRIGHT', 'Tankman Right Note', 24);
+				animation.addByPrefix('singDOWN', 'Tankman DOWN note', 24);
+				animation.addByPrefix('singLEFT', 'Tankman Note Left', 24);
+				animation.addByPrefix('ugh', 'TANKMAN UGH', 24);
+				animation.addByPrefix('prettyGood', 'PRETTY GOOD tankman', 24);
+
+				addOffset('idle');
+				addOffset("singUP", 24, 56);
+				addOffset("singRIGHT", 33, -3);
+				addOffset("singLEFT", 12, -14);
+				addOffset("singDOWN", 98, -90);
+
+				playAnim('idle');
+
+				flipX = true;
+
+			case 'gf-picoTEMP':
+				// GIRLFRIEND CODE
+				tex = Paths.getSparrowAtlas('characters/PicoTEMP_assets');
+				frames = tex;
+				animation.addByPrefix('cheer', 'picoTEMP Cheer', 24, false);
+				animation.addByPrefix('singLEFT', 'picoTEMP left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'picoTEMP Right Note', 24, false);
+				animation.addByPrefix('singUP', 'picoTEMP Up Note', 24, false);
+				animation.addByPrefix('singDOWN', 'picoTEMP Down Note', 24, false);
+				animation.addByIndices('sad', 'picoTEMP sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
+				animation.addByIndices('danceLeft', 'picoTEMP Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+				animation.addByIndices('danceRight', 'picoTEMP Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+				animation.addByIndices('hairBlow', "picoTEMP Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
+				animation.addByIndices('hairFall', "picoTEMP Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
+				animation.addByPrefix('scared', 'picoTEMP FEAR', 24);
+
+				addOffset('cheer');
+				addOffset('sad', -2, -2);
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+
+				addOffset("singUP", 0, 4);
+				addOffset("singRIGHT", 0, -20);
+				addOffset("singLEFT", 0, -19);
+				addOffset("singDOWN", 0, -20);
+				addOffset('hairBlow', 45, -8);
+				addOffset('hairFall', 0, -9);
+
+				addOffset('scared', -2, -17);
+
+				playAnim('danceRight');
+
 		}
 
 		dance();
@@ -573,6 +713,16 @@ class Character extends FlxSprite
 						else
 							playAnim('danceLeft');
 					}
+				case 'gfTankmen':
+					if (!animation.curAnim.name.startsWith('hair'))
+					{
+						danced = !danced;
+
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
 
 				case 'gf-christmas':
 					if (!animation.curAnim.name.startsWith('hair'))
@@ -596,6 +746,16 @@ class Character extends FlxSprite
 							playAnim('danceLeft');
 					}
 				case 'gf-pixel':
+					if (!animation.curAnim.name.startsWith('hair'))
+					{
+						danced = !danced;
+
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
+				case 'gf-picoTEMP':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

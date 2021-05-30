@@ -59,6 +59,7 @@ class OptionsSubState extends MusicBeatSubstate
 
 		if (controls.ACCEPT)
 		{
+			FlxG.sound.play(Paths.sound("optionsSelect"), 0.4);
 			switch (textMenuItems[curSelected])
 			{
 				case "Controls":

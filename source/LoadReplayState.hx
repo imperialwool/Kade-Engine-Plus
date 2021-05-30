@@ -31,7 +31,7 @@ class LoadReplayState extends MusicBeatState
 	var poggerDetails:FlxText;
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat2'));
         #if sys
 		controlsStrings = sys.FileSystem.readDirectory(Sys.getCwd() + "/assets/replays/");
         #end
@@ -60,7 +60,6 @@ class LoadReplayState extends MusicBeatState
         if (controlsStrings.length == 0)
             controlsStrings.push("No Replays...");
 
-		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
 		menuBG.screenCenter();
@@ -143,6 +142,7 @@ class LoadReplayState extends MusicBeatState
 
 			if (controls.ACCEPT && grpControls.members[curSelected].text != "No Replays...")
 			{
+				FlxG.sound.play(Paths.sound('optionsSelect'), 0.4);
                 trace('loading ' + actualNames[curSelected]);
                 PlayState.rep = Replay.LoadReplay(actualNames[curSelected]);
 
@@ -166,7 +166,7 @@ class LoadReplayState extends MusicBeatState
 		// NGio.logEvent('Fresh');
 		#end
 		
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('optionsScroll'), 0.4);
 
 		curSelected += change;
 

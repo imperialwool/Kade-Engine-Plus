@@ -17,21 +17,21 @@ class Ratings
         else if (PlayState.misses < 10) // Single Digit Combo Breaks
             ranking = "(SDCB)";
         else
-            ranking = "(Clear)";
+            ranking = "(Pass)";
 
         // WIFE TIME :)))) (based on Wife3)
 
         var wifeConditions:Array<Bool> = [
-            accuracy >= 99.9935, // AAAAA
-            accuracy >= 99.980, // AAAA:
-            accuracy >= 99.970, // AAAA.
-            accuracy >= 99.955, // AAAA
-            accuracy >= 99.90, // AAA:
-            accuracy >= 99.80, // AAA.
-            accuracy >= 99.70, // AAA
-            accuracy >= 99, // AA:
-            accuracy >= 96.50, // AA.
-            accuracy >= 93, // AA
+            accuracy >= 99.7, // S++
+            accuracy >= 99, // S+:
+            accuracy >= 98.5, // S+.
+            accuracy >= 98, // S+
+            accuracy >= 97.90, // S:
+            accuracy >= 96.80, // S.
+            accuracy >= 96, // S
+            accuracy >= 95, // A+:
+            accuracy >= 93.5, // A+.
+            accuracy >= 92.5, // A+
             accuracy >= 90, // A:
             accuracy >= 85, // A.
             accuracy >= 80, // A
@@ -48,25 +48,46 @@ class Ratings
                 switch(i)
                 {
                     case 0:
-                        ranking += " AAAAA";
+                        if (PlayState.misses == 0)
+                            ranking += " S++";
+                        else 
+                            ranking += " A+++";
                     case 1:
-                        ranking += " AAAA:";
+                        if (PlayState.misses == 0)
+                            ranking += " S+:";
+                        else 
+                            ranking += " A++:";
                     case 2:
-                        ranking += " AAAA.";
+                        if (PlayState.misses == 0)
+                            ranking += " S+.";
+                        else 
+                            ranking += " A++:";
                     case 3:
-                        ranking += " AAAA";
+                        if (PlayState.misses == 0)
+                            ranking += " S+";
+                        else 
+                            ranking += " A++.";
                     case 4:
-                        ranking += " AAA:";
+                        if (PlayState.misses == 0)
+                            ranking += " S:";
+                        else 
+                            ranking += " A++.";
                     case 5:
-                        ranking += " AAA.";
+                        if (PlayState.misses == 0)
+                            ranking += " S.";
+                        else 
+                            ranking += " A++";
                     case 6:
-                        ranking += " AAA";
+                        if (PlayState.misses == 0)
+                            ranking += " S";
+                        else 
+                            ranking += " A++";
                     case 7:
-                        ranking += " AA:";
+                        ranking += " A+:";
                     case 8:
-                        ranking += " AA.";
+                        ranking += " A+.";
                     case 9:
-                        ranking += " AA";
+                        ranking += " A+";
                     case 10:
                         ranking += " A:";
                     case 11:

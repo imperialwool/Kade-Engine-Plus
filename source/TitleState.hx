@@ -254,7 +254,7 @@ class TitleState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-
+		
 		if (FlxG.keys.justPressed.F)
 		{
 			FlxG.fullscreen = !FlxG.fullscreen;
@@ -295,47 +295,19 @@ class TitleState extends MusicBeatState
 				NGio.unlockMedal(61034);
 			#end
 
-			if (FlxG.save.data.flashing)
-				titleText.animation.play('press');
+			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
-			// FlxG.sound.music.stop();
-
+			
 			MainMenuState.firstStart = true;
+			// FlxG.sound.music.stop();
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				// Get current version of Kade Engine
-				
-				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
-				var returnedData:Array<String> = [];
-				
-				http.onData = function (data:String)
-				{
-					returnedData[0] = data.substring(0, data.indexOf(';'));
-					returnedData[1] = data.substring(data.indexOf('-'), data.length);
-				  	if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
-					{
-						trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
-						OutdatedSubState.needVer = returnedData[0];
-						OutdatedSubState.currChanges = returnedData[1];
-						FlxG.switchState(new OutdatedSubState());
-					}
-					else
-					{
-						FlxG.switchState(new MainMenuState());
-					}
-				}
-				
-				http.onError = function (error) {
-				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				}
-				
-				http.request();
+				FlxG.switchState(new MainMenuState());
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
@@ -369,6 +341,15 @@ class TitleState extends MusicBeatState
 		textGroup.add(coolText);
 	}
 
+	function aMTforFirst(text:String)
+	{
+		var coolText2:Alphabet = new Alphabet(0, 0, text, true, false);
+		coolText2.screenCenter(X);
+		coolText2.y += (textGroup.length * 60) + 75;
+		credGroup.add(coolText2);
+		textGroup.add(coolText2);
+	}
+
 	function deleteCoolText()
 	{
 		while (textGroup.members.length > 0)
@@ -394,11 +375,23 @@ class TitleState extends MusicBeatState
 
 		switch (curBeat)
 		{
-			case 1:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
+			/*case 0:
+				//createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', ' ', 'KadeDeveloper', 'codeeater']);
 			// credTextShit.visible = true;
+				addMoreText('Look what we');*/
+			case 2:
+				aMTforFirst('ninjamuffin99');
+				aMTforFirst('phantomArcade');
+				aMTforFirst('kawaisprite');
+				aMTforFirst('evilsk8er');
+				aMTforFirst(' ');
+				aMTforFirst('KadeDeveloper');
+				aMTforFirst('codeeater');
+				aMTforFirst(' ');
 			case 3:
-				addMoreText('present');
+
+
+				aMTforFirst('can present');
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
 			case 4:
@@ -407,18 +400,10 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
-				if (Main.watermarks)
-					createCoolText(['Kade Engine', 'by']);
-				else
-					createCoolText(['In Partnership', 'with']);
+				createCoolText(['Kade Engine by KadeDev', 'Original game available on']);
 			case 7:
-				if (Main.watermarks)
-					addMoreText('KadeDeveloper');
-				else
-				{
-					addMoreText('Newgrounds');
-					ngSpr.visible = true;
-				}
+				addMoreText('Newgrounds');
+				ngSpr.visible = true;
 			// credTextShit.text += '\nNewgrounds';
 			case 8:
 				deleteCoolText();
@@ -445,7 +430,8 @@ class TitleState extends MusicBeatState
 				addMoreText('Night');
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+				addMoreText('Funkin');
+				// credTextShit.text += '\nFunkin';
 
 			case 16:
 				skipIntro();

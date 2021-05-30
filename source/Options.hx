@@ -8,7 +8,10 @@ import flixel.FlxG;
 import openfl.display.FPS;
 import openfl.Lib;
 
-class OptionCategory
+//beforeVersionShit - OFFSET!!!
+//versionShit - DESCRIPTION!!!!
+
+class OptionCatagory
 {
 	private var _options:Array<Option> = new Array<Option>();
 	public final function getOptions():Array<Option>
@@ -27,7 +30,7 @@ class OptionCategory
 		_options.remove(opt);
 	}
 
-	private var _name:String = "New Category";
+	private var _name:String = "New Catagory";
 	public final function getName() {
 		return _name;
 	}
@@ -122,6 +125,29 @@ class CpuStrums extends Option
 	private override function updateDisplay():String
 	{
 		return  FlxG.save.data.cpuStrums ? "Light CPU Strums" : "CPU Strums stay static";
+	}
+
+}
+
+class Week7CutscenesOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.week7Cutscenes = !FlxG.save.data.week7Cutscenes;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return  FlxG.save.data.week7Cutscenes ? "Week Seven Cutscenes ON" : "Week Seven Cutscenes OFF";
 	}
 
 }
@@ -303,11 +329,11 @@ class Judgement extends Option
 
 	override function getValue():String {
 		return "Safe Frames: " + Conductor.safeFrames +
-		" - SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
+		" (SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
 		"ms GD: " + HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0) +
 		"ms BD: " + HelperFunctions.truncateFloat(135 * Conductor.timeScale, 0) + 
 		"ms SHT: " + HelperFunctions.truncateFloat(155 * Conductor.timeScale, 0) +
-		"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms";
+		"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms)";
 	}
 
 	override function right():Bool {
@@ -531,6 +557,50 @@ class AccuracyDOption extends Option
 	}
 }
 
+
+class HardcoringOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.hardcoring = !FlxG.save.data.hardcoring;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Hardcoring " + (FlxG.save.data.hardcoring ? "on" : "off");
+	}
+}
+
+class BotPlayOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.botplay = !FlxG.save.data.botplay;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "BotPlay " + (FlxG.save.data.botplay ? "on" : "off");
+	}
+}
+
+
 class CustomizeGameplay extends Option
 {
 	public function new(desc:String)
@@ -562,7 +632,7 @@ class WatermarkOption extends Option
 
 	public override function press():Bool
 	{
-		Main.watermarks = !Main.watermarks;
+		Main.watermarks = Main.watermarks;
 		FlxG.save.data.watermark = Main.watermarks;
 		display = updateDisplay();
 		return true;
@@ -620,4 +690,49 @@ class BotPlay extends Option
 	
 	private override function updateDisplay():String
 		return "BotPlay " + (FlxG.save.data.botplay ? "on" : "off");
+}
+
+class ChangeBFSkinOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+		acceptValues = true;
+	}
+
+	public override function press():Bool
+	{
+		return false;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "BF Skin Change";
+	}
+
+	override function right():Bool {
+		FlxG.save.data.bfSkinVersion += 1;
+		if (FlxG.save.data.bfSkinVersion > 4)
+			FlxG.save.data.bfSkinVersion = 4;
+		if (FlxG.save.data.bfSkinVersion < 1)
+			FlxG.save.data.bfSkinVersion = 1;
+		return true;
+	}
+
+	override function getValue():String {
+		if (FlxG.save.data.bfSkinVersion == 1)
+			return "Current BF Skin: DEFAULT";
+		else
+			return "Current BF Skin: " + (FlxG.save.data.bfSkinVersion-1);
+	}
+
+	override function left():Bool {
+		FlxG.save.data.bfSkinVersion -= 1;
+		if (FlxG.save.data.bfSkinVersion < 1)
+			FlxG.save.data.bfSkinVersion = 1;
+		if (FlxG.save.data.bfSkinVersion > 4)
+			FlxG.save.data.bfSkinVersion = 4;
+		return true;
+	}
 }

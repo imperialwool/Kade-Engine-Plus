@@ -11,7 +11,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.util.FlxTimer;
 import io.newgrounds.NG;
 import lime.app.Application;
 
@@ -35,12 +34,14 @@ class MainMenuState extends MusicBeatState
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
+	//var newInput:Bool = true;
 	public static var firstStart:Bool = true;
 
 	public static var nightly:String = "";
 
 	public static var kadeEngineVer:String = "1.4.2" + nightly;
-	public static var gameVer:String = "0.2.7.1";
+	public static var gameVer:String = "2.7.1";
+	public static var w7build:String = "314";
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -102,19 +103,18 @@ class MainMenuState extends MusicBeatState
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
 			if (firstStart)
-				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
+				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.bounceInOut, onComplete: function(flxTween:FlxTween) 
 					{ 
 						finishedFunnyMove = true; 
 					}});
 			else
 				menuItem.y = 60 + (i * 160);
 		}
-
 		firstStart = false;
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer +  (Main.watermarks ? " FNF - " + kadeEngineVer + " Kade Engine" : ""), 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, (Main.watermarks ? "FNF " + gameVer + " | KADE ENGINE+ " + kadeEngineVer + " | BUILD " + w7build : ""), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -162,21 +162,23 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				if (optionShit[curSelected] == 'donate')
+				if (optionShit[curSelected] == 'donate1')
 				{
 					#if linux
-					Sys.command('/usr/bin/xdg-open', ["https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game", "&"]);
+					Sys.command('/usr/bin/xdg-open', ["https://ninja-muffin24.itch.io/funkin", "&"]);
 					#else
-					FlxG.openURL('https://www.kickstarter.com/projects/funkin/friday-night-funkin-the-full-ass-game');
+					FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
 					#end
 				}
 				else
 				{
 					selectedSomethin = true;
+					if (optionShit[curSelected] == 'options' || optionShit[curSelected] == 'freeplay' || optionShit[curSelected] == 'donate'){
+						FlxG.sound.music.stop();
+					}
 					FlxG.sound.play(Paths.sound('confirmMenu'));
-					
-					if (FlxG.save.data.flashing)
-						FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+
+					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite)
 					{
@@ -192,20 +194,28 @@ class MainMenuState extends MusicBeatState
 						}
 						else
 						{
-							if (FlxG.save.data.flashing)
+							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
-								FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
+								var daChoice:String = optionShit[curSelected];
+
+								switch (daChoice)
 								{
-									goToState();
-								});
-							}
-							else
-							{
-								new FlxTimer().start(1, function(tmr:FlxTimer)
-								{
-									goToState();
-								});
-							}
+									case 'story mode':
+										FlxG.switchState(new StoryMenuState());
+										trace("Story Menu Selected");
+									case 'donate':
+										FlxG.switchState(new DonateMenu());
+										trace("donate Menu Selected");
+									case 'freeplay':
+										FlxG.switchState(new FreeplayState());
+
+										trace("Freeplay Menu Selected");
+
+									case 'options':
+										//FlxG.sound.music.stop();
+										FlxG.switchState(new OptionsMenu());
+								}
+							});
 						}
 					});
 				}
@@ -219,25 +229,6 @@ class MainMenuState extends MusicBeatState
 			spr.screenCenter(X);
 		});
 	}
-	
-	function goToState()
-	{
-		var daChoice:String = optionShit[curSelected];
-
-		switch (daChoice)
-		{
-			case 'story mode':
-				FlxG.switchState(new StoryMenuState());
-				trace("Story Menu Selected");
-			case 'freeplay':
-				FlxG.switchState(new FreeplayState());
-
-				trace("Freeplay Menu Selected");
-
-			case 'options':
-				FlxG.switchState(new OptionsMenu());
-		}
-	}
 
 	function changeItem(huh:Int = 0)
 	{
@@ -250,6 +241,7 @@ class MainMenuState extends MusicBeatState
 			if (curSelected < 0)
 				curSelected = menuItems.length - 1;
 		}
+
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.animation.play('idle');

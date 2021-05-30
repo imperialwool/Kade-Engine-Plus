@@ -5,6 +5,12 @@ class KadeEngineData
 {
     public static function initSave()
     {
+    	if (FlxG.save.data.bfSkinVersion == null) 
+    		FlxG.save.data.bfSkinVersion == 1;
+
+    	if (FlxG.save.data.hardcoring == null)
+    		FlxG.save.data.hardcoring = true;
+    	
         if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
@@ -13,9 +19,15 @@ class KadeEngineData
 
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
+
+		if (FlxG.save.data.week7Cutscenes == null)
+			FlxG.save.data.week7Cutscenes = false;
 			
 		if (FlxG.save.data.accuracyDisplay == null)
 			FlxG.save.data.accuracyDisplay = true;
+
+		if (FlxG.save.data.offset == null)
+			FlxG.save.data.offset = 0;
 
 		if (FlxG.save.data.offset == null)
 			FlxG.save.data.offset = 0;
@@ -63,17 +75,15 @@ class KadeEngineData
 		if (FlxG.save.data.distractions == null)
 			FlxG.save.data.distractions = true;
 
-		if (FlxG.save.data.flashing == null)
-			FlxG.save.data.flashing = true;
-
-		if (FlxG.save.data.resetButton == null)
-			FlxG.save.data.resetButton = false;
-		
-		if (FlxG.save.data.botplay == null)
-			FlxG.save.data.botplay = false;
+		if (FlxG.save.data.botPlay)
+			FlxG.save.data.botPlay = false;
 
 		if (FlxG.save.data.cpuStrums == null)
 			FlxG.save.data.cpuStrums = false;
+		
+		FlxG.save.data.ughCutscenePlayed = false;
+		FlxG.save.data.gunsCutscenePlayed = false;
+		FlxG.save.data.stressCutscenePlayed = false;
 
 		Conductor.recalculateTimings();
 
