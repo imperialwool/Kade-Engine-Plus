@@ -55,7 +55,7 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 - [The contributors](https://github.com/KadeDev/Kade-Engine/graphs/contributors)
 
 ### Kade Engine PLUS
-- [codeeater](https://twitter.com/codeeater_) - Maintainer and lead programmer
+- [codeeater](https://twitter.com/codeeater_) - stupid programmer, kadedev smorter
 
 # Other pages
  - [BUILDING.md](https://github.com/KadeDev/Kade-Engine/blob/master/BUILDING.md) - How to compile/build the game
