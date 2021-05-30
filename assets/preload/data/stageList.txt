@@ -1,8 +1,11 @@
 stage
 halloween
 philly
+phillyWide
 limo
 mall
 mallEvil
 school
 schoolEvil
+warstage
+lab
