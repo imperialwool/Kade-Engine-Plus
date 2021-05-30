@@ -11,7 +11,7 @@ Links: **[itch.io page](https://ninja-muffin24.itch.io/funkin) ⋅ [Newgrounds](
 **Kade Engine PLUS** is a mod for Friday Night Funkin', including a full engine rework, replays, and more. Based on Kade Engine.
 (If say honestly, it made just for expirience and fun.)
 
-Links: **[GameBanana mod page](https://gamebanana.com/gamefiles/16761) ⋅ [latest stable release](https://github.com/KadeDev/Kade-Engine/releases/latest) ⋅ [latest development build (windows)](https://ci.appveyor.com/project/KadeDev/kade-engine-windows/build/artifacts) ⋅ [latest development build (linux)](https://ci.appveyor.com/project/KadeDev/kade-engine-linux/build/artifacts)**
+Links: **[KE's GameBanana mod page](https://gamebanana.com/gamefiles/16761) ⋅ [latest stable release](https://github.com/toxichead/Kade-Engine-Plus/releases/latest)**
 
 **REMEMBER**: This is a **mod**. This is not the vanilla game and should be treated as a **modification**. This is not and probably will never be official, so don't get confused.
 
