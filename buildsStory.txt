@@ -1,0 +1,35 @@
+- BUILD 314
+Fixed GF in tutorial
+Bugfixes
+
+- BUILD 301
+Fixed a lot of sprites.
+Tankman don't slides so much.
+New features: changing bf skin in settings, botplay, 'time your offset'.
+Easter egg.
+'Hardcoring' slightly fixed.
+Now it's KE+, not 7Week Mod.
+YOU CANNOT DISABLE WATERMARKS HAHA
+Fixes in stages.
+Donate now is a menu with own music, haha. Funny thing, ya know?
+Lost week with icon like 7th week HAHA funny thing
+'Ridge' now without minutes of silence (sorry guys my problem)
+Dancing is normally workin now (build 235 problem)
+Rating system slightly changed
+!Problem - some space before text with interesting info
+!Problem - omg gf what's wrong with you on tutorial
+
+- BUILD 235
+Added 'lost week' (no icon)
+Enter to settings menu is slightly another (music stopping when you choose settings)
+HARDCORING ON MILF!!! (you cant turn it down)
+When you enter to the freeplay, music stopes..
+Now tracklist is working correct.
+TWO LINES IN SETTINGS FOR BEAUTY AND COMFY OMAGAAD
+
+- BUILD 129
+First version of another settings menu.
+Some fixes.
+
+- BUILD 95
+First unstable build.

@@ -1,0 +1,12 @@
+--- How to do own boyfriend skin?
+- Download bf skin what you like;
+- Rename all files like "BOYFRIEND1" (max number is 3);
+- Go to XML file and rename in "<TextureAtlas" "imagePath" as you named files;
+- Copy that files to "[gamefolder]/assets/shared/images/characters".
+! Warning! You should have all files (bfCar, bfChristmas) for working fully, or game can crash!
+! Renaming and XML editing proccess are the same - put the number at the end of file.
+! "BOYFRIEND0" OR "BOYFRIEND69" WILLN'T WORK AND I WILLN'T DO LOADING ASSETS WITH CUSTOM NAMES PLZ DONT FUNK MY BRAINS AND ME WITH THIS SHEET
+
+--- Voices didn't sync properly.
+- Just restart funkin' map, man. I have this problem too, but idk how to solve it now. Maybe, this is fEaTuRe.
+
