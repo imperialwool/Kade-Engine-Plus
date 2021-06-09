@@ -8,7 +8,7 @@ Links: **[itch.io page](https://ninja-muffin24.itch.io/funkin) ⋅ [Newgrounds](
 > Uh oh! Your tryin to kiss ur hot girlfriend, but her MEAN and EVIL dad is trying to KILL you! He's an ex-rockstar, the only way to get to his heart? The power of music... 
 
 ## Kade Engine PLUS
-**Kade Engine PLUS** is a mod for Friday Night Funkin', including a full engine rework, replays, and more. Based on Kade Engine.
+**Kade Engine PLUS** is a fork of Kade Engine, what contain community's ideas and some bug fixes earlier, than in original Kade Engine.
 (If say honestly, it made just for expirience and fun.)
 
 Links: **[KE's GameBanana mod page](https://gamebanana.com/gamefiles/16761) ⋅ [latest stable release](https://github.com/toxichead/Kade-Engine-Plus/releases/latest)**
