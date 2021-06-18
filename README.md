@@ -1,4 +1,4 @@
-![Kade Engine logo](https://user-images.githubusercontent.com/26305836/110529589-4b4eb600-80ce-11eb-9c44-e899118b0bf0.png)
+![Kade Engine logo](https://raw.githubusercontent.com/toxichead/Kade-Engine-Plus/master/KadeEngineLogoPlus.png)
 
 # Friday Night Funkin': Kade Engine PLUS
 ## Friday Night Funkin'
