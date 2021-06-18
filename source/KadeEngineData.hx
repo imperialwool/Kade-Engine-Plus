@@ -35,9 +35,6 @@ class KadeEngineData
 		if (FlxG.save.data.songPosition == null)
 			FlxG.save.data.songPosition = false;
 
-		if (FlxG.save.data.fps == null)
-			FlxG.save.data.fps = false;
-
 		if (FlxG.save.data.changedHit == null)
 		{
 			FlxG.save.data.changedHitX = -1;
@@ -53,6 +50,9 @@ class KadeEngineData
 
 		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
 			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
+
+		if (FlxG.save.data.fpsRain == null)
+			FlxG.save.data.fpsRain = false;
 		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;
@@ -75,17 +75,28 @@ class KadeEngineData
 		if (FlxG.save.data.distractions == null)
 			FlxG.save.data.distractions = true;
 
+		if (FlxG.save.data.resetButton == null)
+			FlxG.save.data.resetButton = false;
+		
 		if (FlxG.save.data.botPlay)
 			FlxG.save.data.botPlay = false;
 
 		if (FlxG.save.data.cpuStrums == null)
 			FlxG.save.data.cpuStrums = false;
+
+		if (FlxG.save.data.strumline == null)
+			FlxG.save.data.strumline = false;
+		
+		if (FlxG.save.data.customStrumLine == null)
+			FlxG.save.data.customStrumLine = 0;
 		
 		FlxG.save.data.ughCutscenePlayed = false;
 		FlxG.save.data.gunsCutscenePlayed = false;
 		FlxG.save.data.stressCutscenePlayed = false;
 
 		Conductor.recalculateTimings();
+		PlayerSettings.player1.controls.loadKeyBinds();
+		KeyBinds.keyCheck();
 
 		Main.watermarks = FlxG.save.data.watermark;
 

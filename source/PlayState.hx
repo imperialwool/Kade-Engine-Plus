@@ -169,6 +169,9 @@ class PlayState extends MusicBeatState
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
 
+	//week7 f.e. ...???
+	//var tankmanWatchtower:FlxSprite;
+
 	var fc:Bool = true;
 
 	var bgGirls:BackgroundGirls;
@@ -788,7 +791,7 @@ class PlayState extends MusicBeatState
 						add(bgClouds);
 
 						var bgBuildings:FlxSprite = new FlxSprite(-110, 210+howMuchToMoveUP-65).loadGraphic(Paths.image('warstage/tankBuildings','week7'));
-						bgBuildings.scrollFactor.set(0.9, 0.9);
+						bgBuildings.scrollFactor.set(1, 1);
 						bgBuildings.antialiasing = true;
 						bgBuildings.scale.set(howMuchToScale*1.34, howMuchToScale*1.34);
 						bgBuildings.active = false;
@@ -801,22 +804,20 @@ class PlayState extends MusicBeatState
 						bgRuins.active = false;
 						add(bgRuins);
 
-						//var bgWatchtower:FlxSprite = new FlxSprite(-110, 100);
-						//var WatchtowerTex = Paths.getPackerAtlas('warstage/tankWatchtower','week7');
-						//bgWatchtower.frames = WatchtowerTex;
-						//bgWatchtower.animation.addByPrefix('treeLoop', 'watchtower gradient color instance ', 24, false);
-						//bgWatchtower.animation.play('treeLoop');
-						//bgWatchtower.scrollFactor.set(0.85, 0.85);
-						//bgWatchtower.antialiasing = true;
-						//bgWatchtower.active = false;
-						//add(bgWatchtower);
-
 						var bgStreet:FlxSprite = new FlxSprite(-69, -15+howMuchToMoveUP-60).loadGraphic(Paths.image('warstage/tankGround','week7'));
 						bgStreet.scrollFactor.set(0.95, 0.95);
 						bgStreet.antialiasing = true;
 						bgStreet.scale.set(howMuchToScale*1.34, howMuchToScale*1.34);
 						bgStreet.active = false;
 						add(bgStreet);
+
+						/*tankmanWatchtower = new FlxSprite(-69, -15);
+						tankmanWatchtower.frames = Paths.getPackerAtlas('warstage/tankWatchtower','week7');
+						tankmanWatchtower.animation.addByPrefix('idle', 'watchtower gradient color instance ', 24, false);
+						tankmanWatchtower.antialiasing = true;
+						if(FlxG.save.data.distractions){
+							add(tankmanWatchtower);
+						}*/
 
 				}
 			case 'stage':
@@ -1903,34 +1904,30 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
-		if (SONG.song.toLowerCase() == 'ugh') {
-			if (curStep == 60 || curStep == 444 || curStep == 524 || curStep == 828) {
-				dad.playAnim('ugh', true);
-			}
-			if (curStep == 64 || curStep == 448 || curStep == 528 || curStep == 832) {
-				dad.playAnim('idle', true);
-			}
-		}
-		if (SONG.song.toLowerCase() == 'screenplay' && curStep >= 798) {
-			trace("Game crashed with code eW91IHN1Y2s=! Below this string here's bunch of log.");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists;");
-			trace("! File '???' don't exists.");
-			System.exit(0);
+		switch (SONG.song.toLowerCase()){
+			case 'ugh':
+				{
+					if (curStep == 60 || curStep == 444 || curStep == 524 || curStep == 828) {
+						dad.playAnim('ugh', true);
+					}
+					if (curStep == 64 || curStep == 448 || curStep == 528 || curStep == 832) {
+						dad.playAnim('idle', true);
+					}
+				}
+			case 'stress':
+				if (curStep == 736) {
+					dad.playAnim('prettyGood', true);
+				}
+			case 'screenplay':
+				if (curStep >= 798) {
+					trace("Game crashed with code eW91IHN1Y2s=! Below this string here's bunch of log.");
+					var randomintlol:Int = 0;
+					while (randomintlol != 13) {
+						trace("! File '???' don't exists;");
+						System.exit(0);
+						randomintlol = randomintlol + 1;
+					}
+				}
 		}
 		#if !debug
 		perfectMode = false;
@@ -2101,16 +2098,28 @@ class PlayState extends MusicBeatState
 		if (health > 2)
 			health = 2;
 
-		if (healthBar.percent < 20)
-			iconP1.animation.curAnim.curFrame = 1;
-		else
-			iconP1.animation.curAnim.curFrame = 0;
+		if (iconP1.changeHealthIcons == true) {
+			if (healthBar.percent < 25) {
+				iconP2.animation.curAnim.curFrame = 2;
+				iconP1.animation.curAnim.curFrame = 1;
+			} else if (healthBar.percent > 75) {
+				iconP2.animation.curAnim.curFrame = 1;
+				iconP1.animation.curAnim.curFrame = 2;
+			} else {
+				iconP2.animation.curAnim.curFrame = 0;
+				iconP1.animation.curAnim.curFrame = 0;
+			}
+		} else {
+			if (healthBar.percent < 20)
+				iconP1.animation.curAnim.curFrame = 1;
+			else
+				iconP1.animation.curAnim.curFrame = 0;
 
-		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
-		else
-			iconP2.animation.curAnim.curFrame = 0;
-
+			if (healthBar.percent > 80) 
+				iconP2.animation.curAnim.curFrame = 1;
+			else
+				iconP2.animation.curAnim.curFrame = 0;
+		}
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
 
@@ -3817,7 +3826,10 @@ class PlayState extends MusicBeatState
 					bottomBoppers.animation.play('bop', true);
 					santa.animation.play('idle', true);
 				}
-
+			case 'warstage':
+				if(FlxG.save.data.distractions) {
+					//tankmanWatchtower.animation.play('idle', true);
+				}
 			case 'limo':
 				if(FlxG.save.data.distractions){
 					grpLimoDancers.forEach(function(dancer:BackgroundDancer)

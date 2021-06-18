@@ -15,6 +15,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 	var altOrNot:String = "";
+	var altOrNotForRevive:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -58,10 +59,15 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.random.int(1, 9) == 3)
+		if (FlxG.random.int(1, 7) == 3) {
 			altOrNot = "Alt";
-		else 
+			altOrNotForRevive = true;
+		}
+		else {
+			altOrNotForRevive = false;
 			altOrNot = "";
+		}
+
 		super.update(elapsed);
 
 		if (controls.ACCEPT)
@@ -122,7 +128,11 @@ class GameOverSubstate extends MusicBeatSubstate
 			isEnding = true;
 			bf.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + altOrNot + stageSuffix));
+			if (altOrNotForRevive)
+				FlxG.sound.play(Paths.music('gameOverEndAlt' + stageSuffix));
+			else
+				FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
+
 
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{

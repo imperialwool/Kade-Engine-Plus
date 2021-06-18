@@ -8,10 +8,7 @@ import flixel.FlxG;
 import openfl.display.FPS;
 import openfl.Lib;
 
-//beforeVersionShit - OFFSET!!!
-//versionShit - DESCRIPTION!!!!
-
-class OptionCatagory
+class OptionCategory
 {
 	private var _options:Array<Option> = new Array<Option>();
 	public final function getOptions():Array<Option>
@@ -30,7 +27,7 @@ class OptionCatagory
 		_options.remove(opt);
 	}
 
-	private var _name:String = "New Catagory";
+	private var _name:String = "New Category";
 	public final function getName() {
 		return _name;
 	}
@@ -75,8 +72,6 @@ class Option
 	public function right():Bool { return throw "stub!"; }
 }
 
-
-
 class DFJKOption extends Option
 {
 	private var controls:Controls;
@@ -89,20 +84,13 @@ class DFJKOption extends Option
 
 	public override function press():Bool
 	{
-		FlxG.save.data.dfjk = !FlxG.save.data.dfjk;
-		
-		if (FlxG.save.data.dfjk)
-			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
-		else
-			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
-
-		display = updateDisplay();
-		return true;
+		OptionsMenu.instance.openSubState(new KeyBindMenu());
+		return false;
 	}
 
 	private override function updateDisplay():String
 	{
-		return  FlxG.save.data.dfjk ? "DFJK" : "WASD";
+		return "Key Bindings";
 	}
 }
 
@@ -125,29 +113,6 @@ class CpuStrums extends Option
 	private override function updateDisplay():String
 	{
 		return  FlxG.save.data.cpuStrums ? "Light CPU Strums" : "CPU Strums stay static";
-	}
-
-}
-
-class Week7CutscenesOption extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		FlxG.save.data.week7Cutscenes = !FlxG.save.data.week7Cutscenes;
-		
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return  FlxG.save.data.week7Cutscenes ? "Week Seven Cutscenes ON" : "Week Seven Cutscenes OFF";
 	}
 
 }
@@ -329,11 +294,11 @@ class Judgement extends Option
 
 	override function getValue():String {
 		return "Safe Frames: " + Conductor.safeFrames +
-		" (SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
+		" - SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
 		"ms GD: " + HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0) +
 		"ms BD: " + HelperFunctions.truncateFloat(135 * Conductor.timeScale, 0) + 
 		"ms SHT: " + HelperFunctions.truncateFloat(155 * Conductor.timeScale, 0) +
-		"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms)";
+		"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms";
 	}
 
 	override function right():Bool {
@@ -449,8 +414,8 @@ class ScrollSpeedOption extends Option
 		if (FlxG.save.data.scrollSpeed < 1)
 			FlxG.save.data.scrollSpeed = 1;
 
-		if (FlxG.save.data.scrollSpeed > 10)
-			FlxG.save.data.scrollSpeed = 10;
+		if (FlxG.save.data.scrollSpeed > 4)
+			FlxG.save.data.scrollSpeed = 4;
 		return true;
 	}
 
@@ -464,8 +429,8 @@ class ScrollSpeedOption extends Option
 		if (FlxG.save.data.scrollSpeed < 1)
 			FlxG.save.data.scrollSpeed = 1;
 
-		if (FlxG.save.data.scrollSpeed > 10)
-			FlxG.save.data.scrollSpeed = 10;
+		if (FlxG.save.data.scrollSpeed > 4)
+			FlxG.save.data.scrollSpeed = 4;
 
 		return true;
 	}
@@ -557,50 +522,6 @@ class AccuracyDOption extends Option
 	}
 }
 
-
-class HardcoringOption extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		FlxG.save.data.hardcoring = !FlxG.save.data.hardcoring;
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "Hardcoring " + (FlxG.save.data.hardcoring ? "on" : "off");
-	}
-}
-
-class BotPlayOption extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		FlxG.save.data.botplay = !FlxG.save.data.botplay;
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "BotPlay " + (FlxG.save.data.botplay ? "on" : "off");
-	}
-}
-
-
 class CustomizeGameplay extends Option
 {
 	public function new(desc:String)
@@ -672,6 +593,52 @@ class OffsetMenu extends Option
 		return "Time your offset";
 	}
 }
+
+class Week7CutscenesOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.week7Cutscenes = !FlxG.save.data.week7Cutscenes;
+		
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return  FlxG.save.data.week7Cutscenes ? "Week Seven Cutscenes ON" : "Week Seven Cutscenes OFF";
+	}
+
+}
+
+
+class HardcoringOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.hardcoring = !FlxG.save.data.hardcoring;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Hardcoring " + (FlxG.save.data.hardcoring ? "on" : "off");
+	}
+}
+
 class BotPlay extends Option
 {
 	public function new(desc:String)

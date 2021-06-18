@@ -151,7 +151,7 @@ class TitleState extends MusicBeatState
 			// music.play();
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 
-			FlxG.sound.music.fadeIn(4, 0, 0.7);
+			FlxG.sound.music.fadeIn(2, 0, 0.7);
 		}
 
 		Conductor.changeBPM(102);
@@ -163,14 +163,25 @@ class TitleState extends MusicBeatState
 		// bg.updateHitbox();
 		add(bg);
 
-		logoBl = new FlxSprite(-150, -100);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
-		logoBl.antialiasing = true;
-		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
-		logoBl.animation.play('bump');
-		logoBl.updateHitbox();
-		// logoBl.screenCenter();
-		// logoBl.color = FlxColor.BLACK;
+		if(Main.watermarks) {
+			logoBl = new FlxSprite(-150, -100);
+			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+			logoBl.antialiasing = true;
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
+			logoBl.animation.play('bump');
+			logoBl.updateHitbox();
+			// logoBl.screenCenter();
+			// logoBl.color = FlxColor.BLACK;
+		} else {
+			logoBl = new FlxSprite(-150, -100);
+			logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+			logoBl.antialiasing = true;
+			logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
+			logoBl.animation.play('bump');
+			logoBl.updateHitbox();
+			// logoBl.screenCenter();
+			// logoBl.color = FlxColor.BLACK;
+		}
 
 		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
@@ -254,7 +265,7 @@ class TitleState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
-		
+
 		if (FlxG.keys.justPressed.F)
 		{
 			FlxG.fullscreen = !FlxG.fullscreen;
@@ -295,21 +306,21 @@ class TitleState extends MusicBeatState
 				NGio.unlockMedal(61034);
 			#end
 
-			titleText.animation.play('press');
+			if (FlxG.save.data.flashing)
+				titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 
 			transitioning = true;
-			
-			MainMenuState.firstStart = true;
 			// FlxG.sound.music.stop();
+
+			MainMenuState.firstStart = true;
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				FlxG.switchState(new MainMenuState());
+				  FlxG.switchState(new MainMenuState());
 			});
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
 
 		if (pressedEnter && !skippedIntro && initialized)
@@ -320,34 +331,25 @@ class TitleState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	function createCoolText(textArray:Array<String>)
+	function createCoolText(textArray:Array<String>, adding:Int = 200)
 	{
 		for (i in 0...textArray.length)
 		{
 			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
 			money.screenCenter(X);
-			money.y += (i * 60) + 200;
+			money.y += (i * 60) + adding;
 			credGroup.add(money);
 			textGroup.add(money);
 		}
 	}
 
-	function addMoreText(text:String)
+	function addMoreText(text:String, adding:Int = 200)
 	{
 		var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
 		coolText.screenCenter(X);
-		coolText.y += (textGroup.length * 60) + 200;
+		coolText.y += (textGroup.length * 60) + adding;
 		credGroup.add(coolText);
 		textGroup.add(coolText);
-	}
-
-	function aMTforFirst(text:String)
-	{
-		var coolText2:Alphabet = new Alphabet(0, 0, text, true, false);
-		coolText2.screenCenter(X);
-		coolText2.y += (textGroup.length * 60) + 75;
-		credGroup.add(coolText2);
-		textGroup.add(coolText2);
 	}
 
 	function deleteCoolText()
@@ -380,18 +382,9 @@ class TitleState extends MusicBeatState
 			// credTextShit.visible = true;
 				addMoreText('Look what we');*/
 			case 2:
-				aMTforFirst('ninjamuffin99');
-				aMTforFirst('phantomArcade');
-				aMTforFirst('kawaisprite');
-				aMTforFirst('evilsk8er');
-				aMTforFirst(' ');
-				aMTforFirst('KadeDeveloper');
-				aMTforFirst('codeeater');
-				aMTforFirst(' ');
+				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', ' ', 'KadeDeveloper', 'codeeater', ' '], 75);
 			case 3:
-
-
-				aMTforFirst('can present');
+				addMoreText('present', 75);
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();
 			case 4:
@@ -400,7 +393,7 @@ class TitleState extends MusicBeatState
 			// credTextShit.text = 'In association \nwith';
 			// credTextShit.screenCenter();
 			case 5:
-				createCoolText(['Kade Engine by KadeDev', 'Original game available on']);
+				createCoolText(['Kade Engine by KadeDev', 'Original game available on'], 180);
 			case 7:
 				addMoreText('Newgrounds');
 				ngSpr.visible = true;
@@ -420,17 +413,19 @@ class TitleState extends MusicBeatState
 			// credTextShit.text += '\nlmao';
 			case 12:
 				deleteCoolText();
+				createCoolText(['Friday', 'Night', 'Funkin', ' '], 95);
 			// credTextShit.visible = false;
 			// credTextShit.text = "Friday";
 			// credTextShit.screenCenter();
 			case 13:
-				addMoreText('Friday');
+				addMoreText('Kade Engine', 95);
 			// credTextShit.visible = true;
 			case 14:
-				addMoreText('Night');
+				addMoreText('PLUS', 95);
+				addMoreText(' ', 95);
 			// credTextShit.text += '\nNight';
 			case 15:
-				addMoreText('Funkin');
+				addMoreText('LETS GO', 95);
 				// credTextShit.text += '\nFunkin';
 
 			case 16:
