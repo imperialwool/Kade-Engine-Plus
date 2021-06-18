@@ -31,6 +31,8 @@
 	 - `haxelib install actuate`
 	 - `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
 	 - `lime rebuild extension-webm windows`
+
+If game suddenly wants from you 'random', install it by typing `haxelib install random` or just update project.xml to last version.
 ### Windows-only dependencies (only for building *to* Windows. Building html5 on Windows does not require this)
 If you are planning to build for Windows, you also need to install **Visual Studio Code 2019**. While installing it, *don't click on any of the options to install workloads*. Instead, go to the **individual components** tab and choose the following:
 -   MSVC v142 - VS 2019 C++ x64/x86 build tools
@@ -48,6 +50,10 @@ If you are planning to build for Windows, you also need to install **Visual Stud
 -   MSVC v140 - VS 2015 C++ build tools (v14.00)
 
 This will install about 22 GB of crap, but is necessary to build for Windows.
+
+**PLZ DONT TRY TO DOWNLOAD ONLY NEW WINDOWS SDK AND VISUAL C++ NOW!!! YES IT SIZES SMALLER, BUT IT DON'T GUARANTEE NORMAL WORK!!!**
+
+~~Better just wait when this file will be updated...~~
 
 ## Cloning the repository
 Since you already installed `git` in a previous step, we'll use it to clone the repository.
