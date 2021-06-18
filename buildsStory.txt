@@ -1,3 +1,9 @@
+- BUILD 351
+Updating to KE 1.5.2
+Bugfixes
+Title screen a little bit changed
+Winning icons (took from some mod, cannot remember what is it sorry men)
+
 - BUILD 314
 Fixed GF in tutorial
 Bugfixes
