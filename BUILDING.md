@@ -29,6 +29,7 @@
 	 - `haxelib git polymod https://github.com/larsiusprime/polymod.git`
 	 - `haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc`
 	 - `haxelib install actuate`
+	 - `haxelib install openfl-webm`
 	 - `haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm`
 	 - `lime rebuild extension-webm windows`
 
