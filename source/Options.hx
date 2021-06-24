@@ -72,6 +72,123 @@ class Option
 	public function right():Bool { return throw "stub!"; }
 }
 
+class ResetSettings extends Option
+{
+	var confirm:Bool = false;
+
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		if(!confirm)
+		{
+			confirm = true;
+			display = updateDisplay();
+			return true;
+		}
+		FlxG.save.data.newInput = true;
+		FlxG.save.data.downscroll = false;
+		FlxG.save.data.dfjk = false;
+		FlxG.save.data.accuracyDisplay = true;
+		FlxG.save.data.offset = 0;
+		FlxG.save.data.songPosition = false;
+		FlxG.save.data.fps = false;
+		FlxG.save.data.changedHitX = -1;
+		FlxG.save.data.changedHitY = -1;
+		FlxG.save.data.changedHit = false;
+		FlxG.save.data.fpsRain = false;
+		FlxG.save.data.fpsCap = 120;
+		FlxG.save.data.scrollSpeed = 1;
+		FlxG.save.data.npsDisplay = false;
+		FlxG.save.data.frames = 10;
+		FlxG.save.data.accuracyMod = 1;
+		FlxG.save.data.watermark = true;
+		FlxG.save.data.ghost = true;
+		FlxG.save.data.distractions = true;
+		FlxG.save.data.flashing = true;
+		FlxG.save.data.resetButton = false;
+		FlxG.save.data.botPlay = false;
+		FlxG.save.data.cpuStrums = false;
+		FlxG.save.data.strumline = false;
+		FlxG.save.data.customStrumLine = 0;
+		FlxG.save.data.camzoom = true;
+		FlxG.save.data.bfSkinVersion = 1;
+		FlxG.save.data.hardcoring = true;
+		FlxG.save.data.inputShow = false;
+		FlxG.save.data.optimize = false;
+		FlxG.save.data.scoreScreen = true;
+		#if cpp
+		FlxG.save.data.caching = true;
+		#else 
+		FlxG.save.data.caching = false;
+		#end
+
+		confirm = false;
+
+		trace('All settings have been reset');
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return confirm ? "Confirm Settings Reset" : "Reset Settings";
+	}
+}
+
+class ScoreScreen extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.scoreScreen = !FlxG.save.data.scoreScreen;
+
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return (FlxG.save.data.scoreScreen ? "Show Score Screen" : "No Score Screen");
+	}
+}
+
+class CachingOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.caching = !FlxG.save.data.caching;
+		if (FlxG.save.data.caching == true)
+			Caching.allowedToStart = true;
+		else 
+			Caching.allowedToStart = false; 
+		//I DID IT BECAUSE YOU CAN ENABLE THIS THING GO TO TITLE AND IT WILL START CACHING LMAO
+		//IF YOU HAVE BETTER IDEAS PLZ HELP
+		//- codeeater_ (aka toxichead)
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return (FlxG.save.data.caching ? "Caching ON" : "Caching OFF");
+	}
+}
+
 class DFJKOption extends Option
 {
 	private var controls:Controls;
@@ -294,8 +411,8 @@ class Judgement extends Option
 
 	override function getValue():String {
 		return "Safe Frames: " + Conductor.safeFrames +
-		" - SIK: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
-		"ms GD: " + HelperFunctions.truncateFloat(90 * Conductor.timeScale, 0) +
+		" - SIK: " + HelperFunctions.truncateFloat(22 * Conductor.timeScale, 0) +
+		"ms GD: " + HelperFunctions.truncateFloat(45 * Conductor.timeScale, 0) +
 		"ms BD: " + HelperFunctions.truncateFloat(135 * Conductor.timeScale, 0) + 
 		"ms SHT: " + HelperFunctions.truncateFloat(155 * Conductor.timeScale, 0) +
 		"ms TOTAL: " + HelperFunctions.truncateFloat(Conductor.safeZoneOffset,0) + "ms";
@@ -617,6 +734,46 @@ class Week7CutscenesOption extends Option
 
 }
 
+class Optimization extends Option
+{
+	public function new(desc:String)
+		{
+			super();
+			description = desc;
+		}
+	
+		public override function press():Bool
+		{
+			FlxG.save.data.optimize = !FlxG.save.data.optimize;
+			display = updateDisplay();
+			return true;
+		}
+	
+		private override function updateDisplay():String
+		{
+			return "Optimization " + (FlxG.save.data.optimize ? "ON" : "OFF");
+		}
+}
+
+class ShowInput extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.inputShow = !FlxG.save.data.inputShow;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return (FlxG.save.data.inputShow ? "Extended Score Info" : "Minimalized Info");
+	}
+}
 
 class HardcoringOption extends Option
 {

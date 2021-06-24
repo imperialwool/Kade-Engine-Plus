@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxObject;
-import flixel.system.FlxSound;
 import flixel.FlxSubState;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -13,27 +12,22 @@ class GameOverSubstate extends MusicBeatSubstate
 	var bf:Boyfriend;
 	var camFollow:FlxObject;
 
-	var stageSuffix:String = "";
 	var altOrNot:String = "";
 	var altOrNotForRevive:Bool = false;
+
+	var stageSuffix:String = "";
 
 	public function new(x:Float, y:Float)
 	{
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
-		switch (daStage)
+		switch (PlayState.SONG.player1)
 		{
-			case 'school':
-				stageSuffix = '-pixel';
-				daBf = 'bf-pixel-dead';
-			case 'schoolEvil':
+			case 'bf-pixel':
 				stageSuffix = '-pixel';
 				daBf = 'bf-pixel-dead';
 			default:
 				daBf = 'bf';
-		}
-		if (PlayState.SONG.song.toLowerCase() == 'stress') {
-			daBf = 'bfAndGf-dead';
 		}
 
 		super();
@@ -132,8 +126,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.sound.play(Paths.music('gameOverEndAlt' + stageSuffix));
 			else
 				FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
-
-
+			
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()

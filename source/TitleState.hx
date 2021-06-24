@@ -1,5 +1,6 @@
 package;
 
+//import smTools.SMFile;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -92,6 +93,9 @@ class TitleState extends MusicBeatState
 
 		KadeEngineData.initSave();
 
+		// var file:SMFile = SMFile.loadFile("file.sm");
+		// this was testing things
+
 		Highscore.load();
 
 		if (FlxG.save.data.weekUnlocked != null)
@@ -113,10 +117,14 @@ class TitleState extends MusicBeatState
 		#elseif CHARTING
 		FlxG.switchState(new ChartingState());
 		#else
-		new FlxTimer().start(1, function(tmr:FlxTimer)
-		{
-			startIntro();
-		});
+		  #if cpp
+			if (FlxG.save.data.caching == true && !Caching.allowedToStart)
+				FlxG.switchState(new Caching());
+		  #end
+			new FlxTimer().start(0, function(tmr:FlxTimer)
+			{
+				startIntro();
+			});
 		#end
 	}
 
@@ -149,9 +157,9 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.1);
 
-			FlxG.sound.music.fadeIn(2, 0, 0.7);
+			FlxG.sound.music.fadeIn(2, 0.1, 0.7);
 		}
 
 		Conductor.changeBPM(102);
@@ -239,7 +247,6 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
-
 		// credGroup.add(credTextShit);
 	}
 
@@ -381,9 +388,10 @@ class TitleState extends MusicBeatState
 				//createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', ' ', 'KadeDeveloper', 'codeeater']);
 			// credTextShit.visible = true;
 				addMoreText('Look what we');*/
-			case 2:
-				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', ' ', 'KadeDeveloper', 'codeeater', ' '], 75);
+			//case 2:
+				
 			case 3:
+				createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er', ' ', 'KadeDeveloper', 'codeeater', ' '], 75);
 				addMoreText('present', 75);
 			// credTextShit.text += '\npresent...';
 			// credTextShit.addText();

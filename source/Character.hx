@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
@@ -37,7 +38,7 @@ class Character extends FlxSprite
 			bfVerPrefix = ''+bfVPTemp;
 		}
 		trace(bfVerPrefix);
-
+			
 		switch (curCharacter)
 		{
 			case 'gf':

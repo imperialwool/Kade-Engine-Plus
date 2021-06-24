@@ -35,7 +35,7 @@ class OptionsMenu extends MusicBeatState
 			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
-			new BotPlay("Enable/disable bot, what will play instead you."),
+			new BotPlay("Showcase your charts and mods with autoplay."),
 			new OffsetMenu("Get a note offset based off of your inputs!"),
 			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
 		]),
@@ -47,6 +47,7 @@ class OptionsMenu extends MusicBeatState
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
+			new ScoreScreen("Show the score screen after the end of a song"),
 			new SongPositionOption("Show the songs current position (as a bar)"),
 			new CpuStrums("CPU's strumline lights up when a note hits it."),
 			#else
@@ -55,13 +56,19 @@ class OptionsMenu extends MusicBeatState
 		]),
 		
 		new OptionCategory("Misc", [
+			#if cpp
+			new CachingOption("Before game will start, it will cache songs, weeks and characters. (YOU NEED TO RESTART GAME)"),
+			#end
 			#if desktop
 			new FPSOption("Toggle the FPS Counter"),
 			new ReplayOption("View replays"),
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new Week7CutscenesOption("Enable cutscenes in week 7 (UNSTABLE)."),
-			new WatermarkOption("Enable and disable all watermarks from the engine.")
+			new WatermarkOption("Enable and disable all watermarks from the engine."),
+			new ShowInput("Display every single input in the score screen."),
+			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
+			new ResetSettings("RESET ALL THINGS WHAT YOU DID HERE.")
 		])
 		
 	];
@@ -103,8 +110,8 @@ class OptionsMenu extends MusicBeatState
 
 		currentDescription = "none";
 
-		beforeVersionShit = new FlxText(5, FlxG.height - 40, 0, "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2));
-		versionShit = new FlxText(5, FlxG.height - 18 - 5, 0, "Description of item: " + currentDescription, 12);
+		beforeVersionShit = new FlxText(5, FlxG.height - 40, 0, "Description of item: " + currentDescription, 12);
+		versionShit = new FlxText(5, FlxG.height - 18 - 5, 0, "Offset (Left, Right, Shift for slow): " + HelperFunctions.truncateFloat(FlxG.save.data.offset,2));
 		beforeVersionShit.scrollFactor.set();
 		versionShit.scrollFactor.set();
 		beforeVersionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

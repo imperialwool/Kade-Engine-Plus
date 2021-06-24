@@ -1,5 +1,7 @@
 package;
 
+
+import webm.WebmPlayer;
 import openfl.display.BlendMode;
 import openfl.text.TextFormat;
 import openfl.display.Application;
@@ -29,9 +31,6 @@ class Main extends Sprite
 
 	public static function main():Void
 	{
-
-		// quick checks 
-
 		Lib.current.addChild(new Main());
 	}
 
@@ -48,6 +47,8 @@ class Main extends Sprite
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 	}
+
+	public static var webmHandler:WebmHandler;
 
 	private function init(?E:Event):Void
 	{
@@ -73,14 +74,10 @@ class Main extends Sprite
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
 
-		#if !debug
-		initialState = TitleState;
-		#end
-
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 
 		addChild(game);
-
+		
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 
 		#if web
@@ -106,7 +103,6 @@ class Main extends Sprite
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
-
 		#end
 	}
 

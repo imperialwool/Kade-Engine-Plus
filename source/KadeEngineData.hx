@@ -6,11 +6,11 @@ class KadeEngineData
     public static function initSave()
     {
     	if (FlxG.save.data.bfSkinVersion == null) 
-    		FlxG.save.data.bfSkinVersion == 1;
+    		FlxG.save.data.bfSkinVersion = 1;
 
     	if (FlxG.save.data.hardcoring == null)
     		FlxG.save.data.hardcoring = true;
-    	
+
         if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
@@ -29,11 +29,11 @@ class KadeEngineData
 		if (FlxG.save.data.offset == null)
 			FlxG.save.data.offset = 0;
 
-		if (FlxG.save.data.offset == null)
-			FlxG.save.data.offset = 0;
-
 		if (FlxG.save.data.songPosition == null)
 			FlxG.save.data.songPosition = false;
+
+		if (FlxG.save.data.fps == null)
+			FlxG.save.data.fps = false;
 
 		if (FlxG.save.data.changedHit == null)
 		{
@@ -50,9 +50,6 @@ class KadeEngineData
 
 		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
 			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
-
-		if (FlxG.save.data.fpsRain == null)
-			FlxG.save.data.fpsRain = false;
 		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;
@@ -75,10 +72,13 @@ class KadeEngineData
 		if (FlxG.save.data.distractions == null)
 			FlxG.save.data.distractions = true;
 
+		if (FlxG.save.data.flashing == null)
+			FlxG.save.data.flashing = true;
+
 		if (FlxG.save.data.resetButton == null)
 			FlxG.save.data.resetButton = false;
 		
-		if (FlxG.save.data.botPlay)
+		if (FlxG.save.data.botPlay == null)
 			FlxG.save.data.botPlay = false;
 
 		if (FlxG.save.data.cpuStrums == null)
@@ -89,10 +89,25 @@ class KadeEngineData
 		
 		if (FlxG.save.data.customStrumLine == null)
 			FlxG.save.data.customStrumLine = 0;
-		
-		FlxG.save.data.ughCutscenePlayed = false;
-		FlxG.save.data.gunsCutscenePlayed = false;
-		FlxG.save.data.stressCutscenePlayed = false;
+
+		if (FlxG.save.data.camzoom == null)
+			FlxG.save.data.camzoom = true;
+
+		if (FlxG.save.data.scoreScreen == null)
+			FlxG.save.data.scoreScreen = true;
+
+		if (FlxG.save.data.inputShow == null)
+			FlxG.save.data.inputShow = false;
+
+		if (FlxG.save.data.optimize == null)
+			FlxG.save.data.optimize = false;
+
+		if (FlxG.save.data.caching == null)
+			#if cpp
+			FlxG.save.data.caching = true;
+			#else 
+			FlxG.save.data.caching = false;
+			#end
 
 		Conductor.recalculateTimings();
 		PlayerSettings.player1.controls.loadKeyBinds();
