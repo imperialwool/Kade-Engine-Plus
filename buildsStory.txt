@@ -1,3 +1,19 @@
+- BUILD 404
+Updating to KE 1.5.4 (master branch on time 24.06.2021 15:20)
+GF bugfix in tutorial (AGAIN, OMG)
+Caching is option
+I think Appveyor like my changes
+Now you can reset all settings
+CUTTED ALL KADE'S WEBM SYSTEM (bcause it haven't any documentations, im lazy and blahblahblah)
+Another bugfixes
+
+- BUILD 351
+Updating to KE 1.5.3
+Fixed down arrow
+Settings and score reset added
+GF bugfix in tutorial (bug from KE 1.5.X, meh)
+Another bugfixes
+
 - BUILD 351
 Updating to KE 1.5.2
 Bugfixes
