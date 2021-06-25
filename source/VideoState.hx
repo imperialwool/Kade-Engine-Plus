@@ -43,10 +43,12 @@ class VideoState extends MusicBeatState
 		
 		leSource = source;
 		transClass = toTrans;
-		if (frameSkipLimit != -1 && GlobalVideo.isWebm)
-		{
-			GlobalVideo.getWebm().webm.SKIP_STEP_LIMIT = frameSkipLimit;	
-		}
+		//if (frameSkipLimit != -1 && GlobalVideo.isWebm)
+		//{
+		//	GlobalVideo.getWebm().webm.SKIP_STEP_LIMIT = frameSkipLimit;	
+		//}
+		//source/VideoState.hx:48: characters 31-46 : Cannot access static field SKIP_STEP_LIMIT from a class instance
+		//and how to fix it...
 	}
 	
 	override function create()
