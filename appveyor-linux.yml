@@ -28,20 +28,20 @@ install:
   - haxelib git faxe https://github.com/uhrobots/faxe
   - haxelib git polymod https://github.com/larsiusprime/polymod.git
   - haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
-  - haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm
+  - haxelib git extension-webm https://github.com/KadeDev/extension-webm
   - haxelib run lime rebuild extension-webm linux
   - haxelib install linc_luajit
   - haxelib install actuate
-  - haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm
+  - haxelib git extension-webm https://github.com/KadeDev/extension-webm
   - haxelib list
-  - cd /home/appveyor/projects/kade-engine-linux
+  - cd /home/appveyor/projects/kade-engine-plus-linux
 
 build_script:
   - haxelib run lime build linux
 
 after_build:
-  - tar -cvf KadeEngine-Linux.tar -C /home/appveyor/projects/kade-engine-linux/export/release/linux/bin .
+  - tar -cvf KadeEngine-Linux.tar -C /home/appveyor/projects/kade-engine-plus-linux/export/release/linux/bin .
 
 artifacts:
-- path: KadeEngine-Linux.tar
-  name: Kade Engine for Linux
+- path: KadeEnginePlus-Linux.tar
+  name: Kade Engine PLUS for Linux

@@ -34,7 +34,7 @@ install:
   - haxelib install actuate
   - haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm
   - haxelib list
-  - cd /Users/appveyor/projects/kade-engine-macos
+  - cd /Users/appveyor/projects/kade-engine-plus-macos
 
 build_script:
   - haxelib run lime build mac
