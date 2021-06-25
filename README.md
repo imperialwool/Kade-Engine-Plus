@@ -1,6 +1,6 @@
 ![Kade Engine Plus logo](https://raw.githubusercontent.com/toxichead/Kade-Engine-Plus/master/KadeEngineLogoPlus.png)
 
-[![Build status](https://img.shields.io/appveyor/build/toxichead/kade-engine-plus-windows?label=windows%20build)](https://ci.appveyor.com/project/toxichead/kade-engine-plus) [![GitHub issues](https://img.shields.io/github/issues/toxichead/kade-engine-plus)](https://github.com/toxichead/Kade-Engine-Plus/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/toxichead/kade-engine-plus)](https://github.com/toxichead/Kade-Engine-Plus/pulls) []() []()
+[![Build status](https://img.shields.io/appveyor/build/toxichead/kade-engine-plus-windows?label=windows%20build)](https://ci.appveyor.com/project/toxichead/kade-engine-plus-windows) [![Build status](https://img.shields.io/appveyor/build/toxichead/kade-engine-plus-macos?label=macos%20build)](https://ci.appveyor.com/project/toxichead/kade-engine-plus-macos) [![Build status](https://img.shields.io/appveyor/build/toxichead/kade-engine-plus-linux?label=linux%20build)](https://ci.appveyor.com/project/toxichead/kade-engine-plus-linux) [![GitHub issues](https://img.shields.io/github/issues/toxichead/kade-engine-plus)](https://github.com/toxichead/Kade-Engine-Plus/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/toxichead/kade-engine-plus)](https://github.com/toxichead/Kade-Engine-Plus/pulls) []() []()
 
 
 # Friday Night Funkin': Kade Engine PLUS
