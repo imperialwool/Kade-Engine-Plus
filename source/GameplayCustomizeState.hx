@@ -33,6 +33,7 @@ class GameplayCustomizeState extends MusicBeatState
 
     var bf:Boyfriend;
     var dad:Character;
+    var gf:Character;
 
     var strumLine:FlxSprite;
     var strumLineNotes:FlxTypedGroup<FlxSprite>;
@@ -51,7 +52,7 @@ class GameplayCustomizeState extends MusicBeatState
         curt = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains','shared'));
         front = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront','shared'));
 
-		Conductor.changeBPM(102);
+		//Conductor.changeBPM(102);
 		persistentUpdate = true;
 
         super.create();
@@ -74,10 +75,14 @@ class GameplayCustomizeState extends MusicBeatState
 
         bf = new Boyfriend(770, 450, 'bf');
 
+        gf = new Character(400, 130, 'gf');
+        gf.scrollFactor.set(0.95, 0.95);
+
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x + 400, dad.getGraphicMidpoint().y);
 
 		camFollow.setPosition(camPos.x, camPos.y);
 
+        add(gf);
         add(bf);
         add(dad);
 
@@ -188,8 +193,9 @@ class GameplayCustomizeState extends MusicBeatState
     {
         super.beatHit();
 
-        bf.playAnim('idle');
-        dad.dance();
+        bf.playAnim('idle', true);
+        dad.dance(true);
+        gf.dance();
 
         FlxG.camera.zoom += 0.015;
         camHUD.zoom += 0.010;

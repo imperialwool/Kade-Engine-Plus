@@ -1,6 +1,9 @@
 package;
 
-
+import lime.app.Application;
+#if windows
+import Discord.DiscordClient;
+#end
 import webm.WebmPlayer;
 import openfl.display.BlendMode;
 import openfl.text.TextFormat;
@@ -17,6 +20,8 @@ import openfl.events.Event;
 
 class Main extends Sprite
 {
+	public static var freakyMenuVersion:String = ""; //freakyMenu remix was taken from https://www.youtube.com/watch?v=26jLVUkV5ew ; thx guy, nice remix, dont joking
+	//if you want old freakyMenu write OLD
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
@@ -50,6 +55,8 @@ class Main extends Sprite
 
 	public static var webmHandler:WebmHandler;
 
+	public static var fuckitsuka = null;
+
 	private function init(?E:Event):Void
 	{
 		if (hasEventListener(Event.ADDED_TO_STAGE))
@@ -80,9 +87,11 @@ class Main extends Sprite
 		
 		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 
+
 		#if web
 		var str1:String = "HTML CRAP";
 		var vHandler = new VideoHandler();
+		fuckitsuka = vHandler;
 		vHandler.init1();
 		vHandler.video.name = str1;
 		addChild(vHandler.video);
@@ -92,6 +101,7 @@ class Main extends Sprite
 		#elseif desktop
 		var str1:String = "WEBM SHIT"; 
 		var webmHandle = new WebmHandler();
+		fuckitsuka = webmHandle;
 		webmHandle.source(ourSource);
 		webmHandle.makePlayer();
 		webmHandle.webm.name = str1;

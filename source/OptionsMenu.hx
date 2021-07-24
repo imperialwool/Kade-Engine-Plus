@@ -1,5 +1,6 @@
 package;
 
+import flixel.input.gamepad.FlxGamepad;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import openfl.Lib;
@@ -26,49 +27,53 @@ class OptionsMenu extends MusicBeatState
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
-			new DownscrollOption("Change the layout of the strumline."),
-			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
-			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
+			new DownscrollOption("Toggle making the notes scroll down rather than up."),
+			new GhostTapOption("Toggle counting pressing a directional input when no arrow is there as a miss."),
+			new Judgement("Customize your Hit Timings. (LEFT or RIGHT)"),
+			new BotPlay("Showcase your charts and mods with autoplay."),
 			#if desktop
-			new FPSCapOption("Cap your FPS"),
+			new FPSCapOption("Change your FPS Cap."),
 			#end
-			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
+			new ScrollSpeedOption("Change your scroll speed. (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
-			new BotPlay("Showcase your charts and mods with autoplay."),
 			new OffsetMenu("Get a note offset based off of your inputs!"),
-			new CustomizeGameplay("Drag'n'Drop Gameplay Modules around to your preference")
+			new CustomizeGameplay("Drag and drop gameplay modules to your prefered positions!")
 		]),
 		new OptionCategory("Appearance", [
-			#if desktop
 			new ChangeBFSkinOption("Changes bf skin. (Left/Right; Simple how-to you can find in game folder)"),
+			new EditorRes("Not showing the editor grid will greatly increase editor performance"),
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new HardcoringOption("In some songs camera can zoom more often, but you can disable it."),
-			new RainbowFPSOption("Make the FPS Counter Rainbow"),
-			new AccuracyOption("Display accuracy information."),
-			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new ScoreScreen("Show the score screen after the end of a song"),
-			new SongPositionOption("Show the songs current position (as a bar)"),
-			new CpuStrums("CPU's strumline lights up when a note hits it."),
-			#else
-			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay.")
-			#end
+			//new CamZoomOption("Toggle the camera zoom in-game."), DONT WORKING NOW
+			new StepManiaOption("Sets the colors of the arrows depending on quantization instead of direction."),
+			new AccuracyOption("Display accuracy information on the info bar."),
+			new SongPositionOption("Show the song's current position as a scrolling bar."),
+			new NPSDisplayOption("Shows your current Notes Per Second on the info bar."),
+			new RainbowFPSOption("Make the FPS Counter flicker through rainbow colors."),
+			new CpuStrums("Toggle the CPU's strumline lighting up when it hits a note."),
 		]),
 		
 		new OptionCategory("Misc", [
 			#if cpp
 			new CachingOption("Before game will start, it will cache songs, weeks and characters. (YOU NEED TO RESTART GAME)"),
 			#end
-			#if desktop
 			new FPSOption("Toggle the FPS Counter"),
-			new ReplayOption("View replays"),
-			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
-			new Week7CutscenesOption("Enable cutscenes in week 7 (UNSTABLE)."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
-			new ShowInput("Display every single input in the score screen."),
-			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
-			new ResetSettings("RESET ALL THINGS WHAT YOU DID HERE.")
+			new AntialiasingOption("Toggle antialiasing, improving graphics quality at a slight performance penalty."),
+			new MissSoundsOption("Toggle miss sounds playing when you don't hit a note."),
+			new ScoreScreen("Show the score screen after the end of a song"),
+			new ShowInput("Display every single input on the score screen."),
+			new Optimization("No characters or backgrounds. Just a usual rhythm game layout.")
+		]),
+
+		new OptionCategory("Saves and Data", [
+			#if desktop
+			new ReplayOption("View saved song replays."),
+			#end
+			new ResetScoreOption("Reset your score on all songs and weeks. This is irreversible!"),
+			new ResetSettings("Reset ALL your settings. This is irreversible!")
 		])
 		
 	];
@@ -85,9 +90,12 @@ class OptionsMenu extends MusicBeatState
 	override function create()
 	{
 		instance = this;
-		FlxG.sound.playMusic(Paths.music('optionsMusic'), 0);
-		FlxG.sound.music.fadeIn(2, 0, 0.7);
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat2"));
+
+		if (!FlxG.sound.music.playing)
+		{
+			FlxG.sound.playMusic(Paths.music('freakyMenu'+Main.freakyMenuVersion));
+		}
 
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -140,8 +148,7 @@ class OptionsMenu extends MusicBeatState
 		if (acceptInput)
 		{
 			if (controls.BACK && !isCat) {
-				FlxG.sound.music.stop();
-				FlxG.sound.play(Paths.sound("optionsBack"), 0.5); 
+				FlxG.sound.play(Paths.sound("cancelMenu"), 0.5); 
 				FlxG.switchState(new MainMenuState());
 			}
 			else if (controls.BACK)
@@ -157,11 +164,28 @@ class OptionsMenu extends MusicBeatState
 						// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 					}
 				curSelected = 0;
-				FlxG.sound.play(Paths.sound("optionsBack"), 0.5);
+				FlxG.sound.play(Paths.sound("cancelMenu"), 0.5);
 			}
-			if (controls.UP_P)
+			
+			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+			if (gamepad != null)
+			{
+				if (gamepad.justPressed.DPAD_UP)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeSelection(-1);
+				}
+				if (gamepad.justPressed.DPAD_DOWN)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeSelection(1);
+				}
+			}
+
+			if (FlxG.keys.justPressed.UP)
 				changeSelection(-1);
-			if (controls.DOWN_P)
+			if (FlxG.keys.justPressed.DOWN)
 				changeSelection(1);
 			
 			if (isCat)
@@ -233,7 +257,7 @@ class OptionsMenu extends MusicBeatState
 
 			if (controls.ACCEPT)
 			{
-				FlxG.sound.play(Paths.sound("optionsSelect"), 0.5);
+				FlxG.sound.play(Paths.sound("confirmMenu"), 0.5);
 				if (isCat)
 				{
 					if (currentSelectedCat.getOptions()[curSelected].press()) {
@@ -271,7 +295,7 @@ class OptionsMenu extends MusicBeatState
 		// NGio.logEvent("Fresh");
 		#end
 		
-		FlxG.sound.play(Paths.sound("optionsScroll"), 0.4);
+		FlxG.sound.play(Paths.sound("scrollMenu"), 0.4);
 
 		curSelected += change;
 

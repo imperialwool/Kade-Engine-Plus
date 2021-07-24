@@ -30,8 +30,11 @@ class DonateMenu extends MusicBeatState
 	'Github page (i need to upload source code((9()',
 	'Leaving to Main Menu.'];
 	var curSelected:Int = 0;
-	var currentDescription:String = "Thanks for looking here! Support us, if you aren't lazy! :)";
+	var standDesc:String = "Thanks for looking here! Support us, if you aren't lazy! :)";
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
+
+	var beforeVersionShit:FlxText;
+	var versionShit:FlxText;
 
 	override function create()
 	{
@@ -42,7 +45,7 @@ class DonateMenu extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('donateLoop'));
+			FlxG.sound.playMusic(Paths.music('freakyMenu'+Main.freakyMenuVersion));
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -70,12 +73,15 @@ class DonateMenu extends MusicBeatState
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 		//end
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 36, 0, (Main.watermarks ? "FNF " + MainMenuState.gameVer + " | KADE ENGINE+ " + MainMenuState.kadeEngineVer + " | BUILD " + MainMenuState.w7build : ""), 12);
-		var beforeVersionShit:FlxText = new FlxText(5, FlxG.height - 18 - 5, 0, "Description: " + currentDescription, 12);
+		versionShit = new FlxText(5, FlxG.height - 36, 0, (Main.watermarks ? "FNF " + MainMenuState.gameVer + " | KADE ENGINE+ " + MainMenuState.kadeEngineVer + " | BUILD " + MainMenuState.w7build : ""), 12);
+		beforeVersionShit = new FlxText(5, FlxG.height - 18 - 5, 0, "Description: " + standDesc, 12);
+
 		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		beforeVersionShit.scrollFactor.set();
+
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		beforeVersionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+
 		add(versionShit);
 		add(beforeVersionShit);
 
@@ -104,13 +110,13 @@ class DonateMenu extends MusicBeatState
 		{
 			if (controls.UP_P)
 			{
-				FlxG.sound.play(Paths.sound('scrollDonate'));
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeSelection(-1);
 			}
 
 			if (controls.DOWN_P)
 			{
-				FlxG.sound.play(Paths.sound('scrollDonate'));
+				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeSelection(1);
 			}
 
@@ -158,7 +164,6 @@ class DonateMenu extends MusicBeatState
 							#end
 						}
 					case "Leave": {
-						FlxG.sound.music.stop();
 						FlxG.switchState(new MainMenuState());
 					}
 				}
@@ -172,6 +177,8 @@ class DonateMenu extends MusicBeatState
 	function changeSelection(change:Int = 0):Void
 	{
 		curSelected += change;
+
+		beforeVersionShit.text = "Description: " + miDesc[curSelected];
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;

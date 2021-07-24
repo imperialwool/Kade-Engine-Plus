@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.FlxG;
 
 class HealthIcon extends FlxSprite
 {
@@ -12,10 +13,17 @@ class HealthIcon extends FlxSprite
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
+		
+		if (char == 'sm')
+		{
+			loadGraphic(Paths.image("stepmania-icon"));
+			return;
+		}
 		if (changeHealthIcons) {
 			loadGraphic(Paths.image('iconGrid'), true, 150, 150);
 			//first - normal icon, second - losing icon, third - winning icon. UNDERSTAAAND???
-			antialiasing = true;
+			if(FlxG.save.data.antialiasing)
+				antialiasing = true;
 			animation.add('bf', [1, 0, 2], 0, false, isPlayer);
 			animation.add('bfAndGf', [1, 0, 2], 0, false, isPlayer);
 			animation.add('bf-car', [1, 0, 2], 0, false, isPlayer);
@@ -28,7 +36,6 @@ class HealthIcon extends FlxSprite
 			animation.add('mom-car', [17, 16, 18], 0, false, isPlayer);
 			animation.add('tankman', [9, 29, 19], 0, false, isPlayer);
 			animation.add('face', [25,25,25], 0, false, isPlayer);
-			animation.add('agoti', [25,25,25], 0, false, isPlayer);
 			animation.add('dad', [7, 6, 8], 0, false, isPlayer);
 			animation.add('senpai', [31, 30, 32], 0, false, isPlayer);
 			animation.add('senpai-angry', [31, 30, 32], 0, false, isPlayer);
@@ -43,8 +50,8 @@ class HealthIcon extends FlxSprite
 			animation.add('monster-christmas', [24, 23, 25], 0, false, isPlayer);
 		} else {
 			loadGraphic(Paths.image('iconGrid_OLD'), true, 150, 150);
-
-			antialiasing = true;
+			if(FlxG.save.data.antialiasing)
+				antialiasing = true;
 			animation.add('bf', [0, 1], 0, false, isPlayer);
 			animation.add('bfAndGf', [0, 1], 0, false, isPlayer);
 			animation.add('bf-car', [0, 1], 0, false, isPlayer);
@@ -57,7 +64,6 @@ class HealthIcon extends FlxSprite
 			animation.add('mom-car', [6, 7], 0, false, isPlayer);
 			animation.add('tankman', [8, 9], 0, false, isPlayer);
 			animation.add('face', [10, 11], 0, false, isPlayer);
-			animation.add('agoti', [10, 11], 0, false, isPlayer);
 			animation.add('dad', [12, 13], 0, false, isPlayer);
 			animation.add('senpai', [22, 22], 0, false, isPlayer);
 			animation.add('senpai-angry', [22, 22], 0, false, isPlayer);

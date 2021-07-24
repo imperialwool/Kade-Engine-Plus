@@ -1,3 +1,4 @@
+import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 import flixel.FlxG;
 
@@ -5,6 +6,9 @@ class KadeEngineData
 {
     public static function initSave()
     {
+		//if (FlxG.save.data.weekUnlocked == null)
+		//	FlxG.save.data.weekUnlocked = 8; dont will touch this now
+
     	if (FlxG.save.data.bfSkinVersion == null) 
     		FlxG.save.data.bfSkinVersion = 1;
 
@@ -109,6 +113,22 @@ class KadeEngineData
 			FlxG.save.data.caching = false;
 			#end
 
+		if (FlxG.save.data.stepMania == null)
+			FlxG.save.data.stepMania = false;
+
+		if (FlxG.save.data.antialiasing == null)
+			FlxG.save.data.antialiasing = true;
+
+		if (FlxG.save.data.missSounds == null)
+			FlxG.save.data.missSounds = true;
+
+		if (FlxG.save.data.editor == null)
+			FlxG.save.data.editor = true;
+
+		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+		KeyBinds.gamepad = gamepad != null;
+		
 		Conductor.recalculateTimings();
 		PlayerSettings.player1.controls.loadKeyBinds();
 		KeyBinds.keyCheck();

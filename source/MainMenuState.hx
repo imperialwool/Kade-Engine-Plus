@@ -1,5 +1,6 @@
 package;
 
+import flixel.input.gamepad.FlxGamepad;
 import Controls.KeyboardScheme;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -32,20 +33,21 @@ class MainMenuState extends MusicBeatState
 	#else
 	var optionShit:Array<String> = ['story mode', 'freeplay'];
 	#end
-
+	var blakthing:FlxSprite = new FlxSprite(-100, -100).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.BLACK);
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
 	public static var firstStart:Bool = true;
 
 	public static var nightly:String = "";
 
-	public static var kadeEngineVer:String = "1.5.3" + nightly;
+	public static var kadeEngineVer:String = "1.6" + nightly;
 	public static var gameVer:String = "0.2.7.1";
-	public static var w7build:String = "404";
+	public static var w7build:String = "463";
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	public static var finishedFunnyMove:Bool = false;
+	var versionShit:FlxText;
 
 	override function create()
 	{
@@ -56,7 +58,7 @@ class MainMenuState extends MusicBeatState
 
 		if (!FlxG.sound.music.playing)
 		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(Paths.music('freakyMenu'+Main.freakyMenuVersion));
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -64,10 +66,12 @@ class MainMenuState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.10;
+		//bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
-		bg.antialiasing = true;
+		if(FlxG.save.data.antialiasing)
+			bg.antialiasing = true;
 		add(bg);
 
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -76,20 +80,25 @@ class MainMenuState extends MusicBeatState
 		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.10;
+		//magenta.scrollFactor.set();
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
 		magenta.updateHitbox();
 		magenta.screenCenter();
 		magenta.visible = false;
-		magenta.antialiasing = true;
+		if(FlxG.save.data.antialiasing)
+			magenta.antialiasing = true;
 		magenta.color = 0xFFfd719b;
 		add(magenta);
-		// magenta.scrollFactor.set();
+
+		blakthing.scrollFactor.set();
+		add(blakthing);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
+		
+		FlxTween.tween(blakthing,{y: -1500}, 0.9, {ease: FlxEase.sineOut});
 		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
-
 		for (i in 0...optionShit.length)
 		{
 			var menuItem:FlxSprite = new FlxSprite(0, FlxG.height * 1.6);
@@ -101,22 +110,20 @@ class MainMenuState extends MusicBeatState
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
-			if (firstStart)
-				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
-					{ 
-						finishedFunnyMove = true; 
-						changeItem();
-					}});
-			else
-				menuItem.y = 60 + (i * 160);
+			if(FlxG.save.data.antialiasing)
+					menuItem.antialiasing = true;
+			FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
+			{ 
+				finishedFunnyMove = true; 
+				changeItem();
+			}});
 		}
 
 		firstStart = false;
 
 		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, (Main.watermarks ? "FNF " + gameVer + " | KADE ENGINE+ " + kadeEngineVer + " | BUILD " + w7build : ""), 12);
+		versionShit = new FlxText(5, FlxG.height - 18, 0, ("FNF " + gameVer + " | KADE ENGINE+ BUILD " + w7build), 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -145,13 +152,29 @@ class MainMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
+			var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
+
+			if (gamepad != null)
+			{
+				if (gamepad.justPressed.DPAD_UP)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeItem(-1);
+				}
+				if (gamepad.justPressed.DPAD_DOWN)
+				{
+					FlxG.sound.play(Paths.sound('scrollMenu'));
+					changeItem(1);
+				}
+			}
+
+			if (FlxG.keys.justPressed.UP)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
 
-			if (controls.DOWN_P)
+			if (FlxG.keys.justPressed.DOWN)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
@@ -159,14 +182,23 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				FlxTween.tween(blakthing,{y: 0}, 0.4, {ease: FlxEase.sineOut});
+				FlxTween.tween(versionShit,{y: 1500}, 0.4, {ease: FlxEase.quintInOut});
+				menuItems.forEach(function(spr:FlxSprite)
+				{
+					FlxTween.tween(spr, {y: 1500}, 0.4, {ease: FlxEase.quintInOut});
+				});
+				new FlxTimer().start(0.4, function(tmr:FlxTimer)
+				{
+					FlxG.switchState(new TitleState());
+				});
 			}
 
 			if (controls.ACCEPT)
 			{
 				selectedSomethin = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				if (optionShit[curSelected] != 'story mode')
+				if (optionShit[curSelected] == 'freeplay')
 					FlxG.sound.music.stop();
 				
 				selectedSomethin = true;
@@ -179,7 +211,7 @@ class MainMenuState extends MusicBeatState
 				{
 					if (curSelected != spr.ID)
 					{
-						FlxTween.tween(spr, {alpha: 0}, 1.3, {
+						FlxTween.tween(spr, {alpha: 0, y: 1500}, 0.7, {
 							ease: FlxEase.quadOut,
 							onComplete: function(twn:FlxTween)
 							{
@@ -193,13 +225,18 @@ class MainMenuState extends MusicBeatState
 						{
 							FlxFlicker.flicker(spr, 1, 0.06, false, false, function(flick:FlxFlicker)
 							{
+								FlxTween.tween(spr, {y: 1500}, 0.7, {ease: FlxEase.quintInOut});
+								FlxTween.tween(blakthing,{y: 0}, 0.75, {ease: FlxEase.sineOut});
 								goToState();
 							});
 						}
 						else
 						{
+							
 							new FlxTimer().start(1, function(tmr:FlxTimer)
 							{
+								FlxTween.tween(spr, {y: 1500}, 0.7, {ease: FlxEase.quintInOut});
+								FlxTween.tween(blakthing,{y: 0}, 0.75, {ease: FlxEase.sineOut});
 								goToState();
 							});
 						}
