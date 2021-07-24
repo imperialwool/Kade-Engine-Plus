@@ -72,5 +72,6 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 # Other pages
  - [BUILDING.md](https://github.com/toxichead/Kade-Engine-Plus/blob/master/BUILDING.md) - How to compile/build the game
  - [ModCharts.md](https://github.com/toxichead/Kade-Engine-Plus/blob/master/ModCharts.md) - Mod Chart Documentation
+ - [How to work with video](https://github.com/toxichead/Kade-Engine-Plus/wiki/HOW-TO-WORK-WITH-VIDEO)
 
 (patch-X just for pull requests sorry im dumb in github)
