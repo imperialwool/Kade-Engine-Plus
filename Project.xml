@@ -7,6 +7,8 @@
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
 
+	<haxedef name="LINC_LUA_RELATIVE_DYNAMIC_LIB"/>
+
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<!-- <app preloader="Preloader" resizable="true" /> -->
@@ -59,6 +61,7 @@
 		<library name="week6"    preload="true" />
 		<library name="week7"    preload="true" />
 		<library name="weekUnused"    preload="true" />
+		<library name="sm"    preload="true" />
 	</section>
 	
 	<section if="NO_PRELOAD_ALL">
@@ -73,6 +76,7 @@
 		<library name="week6"    preload="false" />
 		<library name="week7"    preload="false" />
 		<library name="weekUnused"    preload="true" />
+		<library name="sm"    preload="false" />
 	</section>
 	
 	
@@ -102,6 +106,9 @@
 	<assets path="assets/week7/videos" include="*.ogg" unless="web"/>
 	<assets path="assets/week7/videos" include="*.txt"/>
 	<assets path="assets/weekUnused"    library="weekUnused"    exclude="*.mp3" unless="web"/>
+
+	<assets path="assets/sm"    library="sm"    exclude="*.ogg" if="web"/>
+	<assets path="assets/sm"    library="sm"    exclude="*.mp3" unless="web"/>
 	
 	<assets path='example_mods' rename='mods' embed='false'/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
@@ -111,6 +118,13 @@
 	<!-- <assets path="CHANGELOG.md" rename='changelog.txt'/> -->
 	<assets path="buildsStory.txt" rename='buildsStory.txt'/>
 	<assets path="how-to.txt" rename='how-to.txt'/>
+
+	<!-- FILES FOR VIDEO (BUGGY THING LMAO) -->
+	<assets path="into_export/avcodec-58.dll" rename='avcodec-58.dll' unless="web"/>
+	<assets path="into_export/avformat-58.dll" rename='avformat-58.dll' unless="web"/>
+	<assets path="into_export/avutil-56.dll" rename='avutil-56.dll' unless="web"/>
+	<assets path="into_export/swresample-3.dll" rename='swresample-3.dll' unless="web"/>
+	<assets path="into_export/webmHelper.ndll" rename='webmHelper.ndll' unless="web"/>
 
 	<!-- NOTE FOR FUTURE SELF SINCE FONTS ARE ALWAYS FUCKY 
 		TO FIX ONE OF THEM, I CONVERTED IT TO OTF. DUNNO IF YOU NEED TO
@@ -138,7 +152,7 @@
 	<haxelib name="discord_rpc" if="windows"/>
 	<haxelib name="linc_luajit" if="windows"/>
 
-	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
+	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/>  -->
 
 	<!-- <haxelib name="markdown" /> -->
 	<!-- <haxelib name="HtmlParser" /> -->
@@ -174,6 +188,8 @@
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />
+
+	<haxedef name="HXCPP_GC_BIG_BLOCKS"/>
 
 	<!--Enable this for Nape release builds for a serious peformance improvement-->
 	<haxedef name="NAPE_RELEASE_BUILD" unless="debug" />
