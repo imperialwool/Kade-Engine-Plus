@@ -68,6 +68,8 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 - [Puyo](https://github.com/puyoxyz) - Setting up appveyor and a lot of other help
 - [Smokey](https://github.com/Smokey555) - telling me that I should do the tricky asset loading
 - [Poco](https://github.com/poco0317) - math degree (aka most of the fucking math in this project)
+- [Hydra](https://www.youtube.com/watch?v=26jLVUkV5ew) - great remix for menu
+- [kem0x](https://github.com/kem0x/openfl-haxeflixel-video-code/tree/main/source/ndll) - because him you now dont need txt files for videos
 
 # Other pages
  - [BUILDING.md](https://github.com/toxichead/Kade-Engine-Plus/blob/master/BUILDING.md) - How to compile/build the game
